@@ -1,5 +1,25 @@
 RSpec.describe Monthra::Month do
 
+  describe '::new' do
+    it 'should save the year and month if valid' do
+      m = Monthra::Month.new(2018, 7)
+
+      expect(m.year).to eq(2018)
+      expect(m.month).to eq(7)
+    end
+
+    it 'should error if the month is out of range' do
+      expect { Monthra::Month.new(2018, 9001) }.to raise_error(Exception)
+    end
+
+    it 'should handle a negative month by subtracting 1 from the year' do
+      m = Monthra::Month.new(2018, -1)
+
+      expect(m.year).to eq(2017)
+      expect(m.month).to eq(12)
+    end
+  end
+
   describe '::at' do
     it "should take a month as an argument and make a new month with the same values" do
       m = Monthra::Month.new(2018, 7)
@@ -67,6 +87,25 @@ RSpec.describe Monthra::Month do
     end
   end
 
+  describe '.begin_on' do
+    it "should be converted to a date on the first of the month" do
+      month = Monthra::Month.new(2018, 7)
+      expect(month.begin_on).to eq(Date.new(2018, 7, 1))
+    end
+  end
+
+  describe '.end_on' do
+    it "should be converted to a date on the first of the month" do
+      month = Monthra::Month.new(2018, 7)
+      expect(month.end_on).to eq(Date.new(2018, 7, 31))
+    end
+
+    it 'should handle leap years' do
+      month = Monthra::Month.new(2016, 2)
+      expect(month.end_on).to eq(Date.new(2016, 2, 29))
+    end
+  end
+
   describe '.to_time' do
     it "should be converted to a time on the first of the month" do
       month = Monthra::Month.new(2018, 7)
@@ -74,7 +113,14 @@ RSpec.describe Monthra::Month do
     end
   end
 
-  describe "<=> operator" do
+  describe '.strfmonth' do
+    it "should format the month as described" do
+      month = Monthra::Month.new(2018, 7)
+      expect(month.strfmonth("%Y-%m")).to eq('2018-07')
+    end
+  end
+
+  describe ".<=>" do
     it "should return 1 if the month is greater" do
       month1 = Monthra::Month.new(2018, 7)
       month2 = Monthra::Month.new(2018, 5)
