@@ -20,6 +20,15 @@ RSpec.describe Monthra::Month do
     end
   end
 
+  describe '::strpmonth' do
+    it 'should convert a string into a month' do
+      m = Monthra::Month.strpmonth('2018-07', '%Y-%m')
+
+      expect(m.year).to eq(2018)
+      expect(m.month).to eq(7)
+    end
+  end
+
   describe '::at' do
     it "should take a month as an argument and make a new month with the same values" do
       m = Monthra::Month.new(2018, 7)

@@ -1,8 +1,6 @@
 # Monthra
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/monthra`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A month object that converts consistently into Date and Time objects.
 
 ## Installation
 
@@ -22,7 +20,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+# Instantiate with a year and month
+m = Monthra::Month.new(2018, 7)
+
+# Convert to a date, time, or string
+m.to_time
+m.to_date
+m.strfmonth("%Y-%m")
+
+# Convert a date, time, or string into a month
+Monthra::Month.at(Time.now)
+Monthra::Month.at(Date.today)
+Monthra::Month.strpmonth("2018-07", "%Y-%m")
+```
 
 ## Development
 
@@ -32,7 +43,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/monthra.
+Bug reports and pull requests are welcome on GitHub at https://github.com/jeremiahishere/monthra.
 
 ## License
 

@@ -15,6 +15,13 @@ module Monthra
       end
     end
 
+    # @param [String] month_str
+    # @param [String] format
+    # @return [Month]
+    def self.strpmonth(month_str, format)
+      self.at(Time.strptime(month_str, format))
+    end
+
     # @param [Fixnum] new_year The year of the month
     # @param [Fixnum] new_month The month of the year.  If a negative month is passed in, the year
     #   is decremented.
