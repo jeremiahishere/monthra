@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = "monthra"
   spec.version       = Monthra::VERSION
   spec.authors       = ["jeremiah.hemphill@gmail.com"]
-  spec.email         = ["jeremiah.hemphill@jdpa.com"]
+  spec.email         = ["jeremiah.hemphill@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{A month object for ruby.}
+  spec.description   = %q{It is pretty cool.}
+  spec.homepage      = "https://github.com/jeremiahishere/monthra"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
