@@ -1,6 +1,3 @@
-require 'date'
-require 'time'
-
 module Monthra
   class Month
     include Comparable
@@ -39,6 +36,11 @@ module Monthra
       else # the current month is less
         return -1
       end
+    end
+
+    # @return [Month] To Match the monkey patch in Date and Time
+    def to_monthra_month
+      self
     end
 
     # @return [Fixnum] The year
@@ -80,7 +82,60 @@ module Monthra
       strfmonth("%Y-%m")
     end
 
+    # @param [Integer or Month] offset How much to add to the current month.
+    # @return [Month]
+    def +(offset)
+      offsets = month_year_offset(offset)
+
+      new_year = year + offsets[:year]
+      new_month = month + offsets[:month]
+      
+      if new_month > 12
+        new_month -= 12
+        new_year += 1
+      end
+
+      self.class.new(new_year, new_month)
+    end
+
+    # @param [Integer or Month] offset How much to subtract to the current month.
+    # @return [Month]
+    def -(offset)
+      offsets = month_year_offset(offset)
+
+      new_year = year - offsets[:year]
+      new_month = month - offsets[:month]
+
+      if new_month < 1
+        new_month += 12 # note there is no month 0
+        new_year -= 1
+      end
+      
+      self.class.new(new_year, new_month)
+    end
+
     private
+
+    # @param [Integer or Month] offset How much to add to the current month.  If a month
+    #   object is passed in, both the year and month values are considered.  If an integer is passed
+    #   in, it represents the number of months.
+    # @return [Hash] With :year and :month keys with offsets
+    def month_year_offset(offset)
+      if offset.is_a?(Integer)
+        year_offset = offset / 12
+        month_offset = offset % 12
+      elsif offset.is_a?(Month)
+        year_offset = offset.year
+        month_offset = offset.month
+      else
+        raise ArgumentError, "Unsupported data type, #{month_offset.class.name}"
+      end
+
+      return {
+        year: year_offset,
+        month: month_offset
+      }
+    end
 
     # if month > 12 or < -12 or == 0, raise exception
     # if the month < 0, then subtract that number from 12 and decrement the year

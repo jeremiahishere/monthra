@@ -172,4 +172,92 @@ RSpec.describe Monthra::Month do
       expect(month1.<=>(month2)).to eq(-1)
     end
   end
+
+  describe '.+' do
+    it 'should add an integer month' do
+      month = Monthra::Month.new(2017, 7)
+
+      output = month + 3
+
+      expect(output.year).to eq(2017)
+      expect(output.month).to eq(10)
+    end
+
+    it 'should add an integer month greater than 12 and affect the year' do
+      month = Monthra::Month.new(2017, 7)
+
+      output = month + 14
+
+      expect(output.year).to eq(2018)
+      expect(output.month).to eq(9)
+    end
+
+    it 'should update the year if the month goes above 12' do
+      month = Monthra::Month.new(2017, 7)
+
+      output = month + 7
+
+      expect(output.year).to eq(2018)
+      expect(output.month).to eq(2)
+    end
+
+    it 'should add a monthra month' do
+      month = Monthra::Month.new(2017, 7)
+      offset = Monthra::Month.new(1, 8)
+
+      output = month + offset
+
+      expect(output.year).to eq(2019)
+      expect(output.month).to eq(3)
+    end
+  end
+
+  describe '.-' do
+    it 'should subtract an integer month' do
+      month = Monthra::Month.new(2017, 7)
+
+      output = month - 3
+
+      expect(output.year).to eq(2017)
+      expect(output.month).to eq(4)
+    end
+
+    it 'should subtract an integer month greater than 12 and affect the year' do
+      month = Monthra::Month.new(2017, 7)
+
+      output = month - 14
+
+      expect(output.year).to eq(2016)
+      expect(output.month).to eq(5)
+    end
+
+    it 'should update the year if the month goes below 1' do
+      month = Monthra::Month.new(2017, 7)
+
+      output = month - 10
+
+      expect(output.year).to eq(2016)
+      expect(output.month).to eq(9)
+    end
+
+    # this is a strange edge case because the months are one indexed
+    it 'should update the year if the month goes to exactly zero' do
+      month = Monthra::Month.new(2017, 7)
+
+      output = month - 7
+
+      expect(output.year).to eq(2016)
+      expect(output.month).to eq(12)
+    end
+
+    it 'should subtract a monthra month' do
+      month = Monthra::Month.new(2017, 7)
+      offset = Monthra::Month.new(1, 8)
+
+      output = month - offset
+
+      expect(output.year).to eq(2015)
+      expect(output.month).to eq(11)
+    end
+  end
 end
