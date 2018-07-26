@@ -12,6 +12,11 @@ module Monthra
       end
     end
 
+    # @return [Month] For today
+    def self.current
+      self.at(Date.today)
+    end
+
     # @param [String] month_str
     # @param [String] format
     # @return [Month]

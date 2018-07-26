@@ -29,6 +29,15 @@ RSpec.describe Monthra::Month do
     end
   end
 
+  describe '::current' do
+    it 'should return the month for the current day' do
+      m1 = Monthra::Month.at(Date.today)
+      m2 = Monthra::Month.current
+
+      expect(m1).to eq(m2)
+    end
+  end
+
   describe '::at' do
     it "should take a month as an argument and make a new month with the same values" do
       m = Monthra::Month.new(2018, 7)
