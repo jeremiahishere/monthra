@@ -9,6 +9,8 @@ RSpec.describe Date do
       expect(month.month).to eq(7)
     end
   end
+
+  it { should respond_to :to_monthra }
 end
 
 RSpec.describe Time do
@@ -22,4 +24,6 @@ RSpec.describe Time do
       expect(month.month).to eq(7)
     end
   end
+
+  it { should respond_to :to_monthra }
 end

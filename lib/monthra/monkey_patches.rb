@@ -2,12 +2,14 @@
 
 class Date
   def to_monthra_month
-    Monthra::Month.at(self)
+    Monthra.at(self)
   end
+  alias to_monthra to_monthra_month
 end
 
 class Time
   def to_monthra_month
-    Monthra::Month.at(self)
+    Monthra.at(self)
   end
+  alias to_monthra to_monthra_month
 end
